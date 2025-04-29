@@ -1,0 +1,32 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6 dark:text-white">Tasks</h1>
+  
+  <div class="mb-6 flex justify-between items-center">
+    <div class="flex space-x-4">
+      <%= link_to "All", tasks_path(filter: "all"), 
+          class: "px-4 py-2 rounded-lg #{@filter == 'all' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 dark:text-white'}" %>
+      <%= link_to "Pending", tasks_path(filter: "pending"), 
+          class: "px-4 py-2 rounded-lg #{@filter == 'pending' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 dark:text-white'}" %>
+      <%= link_to "Completed", tasks_path(filter: "completed"), 
+          class: "px-4 py-2 rounded-lg #{@filter == 'completed' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 dark:text-white'}" %>
+    </div>
+    
+    <%= link_to "New Task", new_task_path, 
+        class: "px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition",
+        data: { turbo_frame: "modal" } %>
+  </div>
+  
+  <%= turbo_frame_tag "tasks" do %>
+    <div id="tasks-list" class="space-y-4">
+      <% if @tasks.any? %>
+        <%= render @tasks %>
+      <% else %>
+        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-center dark:text-white">
+          No tasks found. Create a new task to get started!
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <%= turbo_frame_tag "modal" %>
+</div>
