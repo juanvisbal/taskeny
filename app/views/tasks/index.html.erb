@@ -1,32 +1,59 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-6 dark:text-white">Tasks</h1>
-  
-  <div class="mb-6 flex justify-between items-center">
-    <div class="flex space-x-4">
-      <%= link_to "All", tasks_path(filter: "all"), 
-          class: "px-4 py-2 rounded-lg #{@filter == 'all' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 dark:text-white'}" %>
-      <%= link_to "Pending", tasks_path(filter: "pending"), 
-          class: "px-4 py-2 rounded-lg #{@filter == 'pending' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 dark:text-white'}" %>
-      <%= link_to "Completed", tasks_path(filter: "completed"), 
-          class: "px-4 py-2 rounded-lg #{@filter == 'completed' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 dark:text-white'}" %>
-    </div>
-    
-    <%= link_to "New Task", new_task_path, 
-        class: "px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition",
-        data: { turbo_frame: "modal" } %>
+
+<header class="flex space-x-4 items-center justify-between mb-6">
+  <h1 class="text-3xl font-bold dark:text-white">Tasks</h1>
+
+  <%= link_to new_task_path,
+      class: "w-8 h-8 flex items-center justify-center bg-green-500 text-white rounded-lg hover:bg-green-600 transition lg:hidden",
+      data: { turbo_frame: "modal" },
+      aria: { label: "Create new task" } do %>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+    </svg>
+  <% end %>
+</header>
+
+<section id="flash" class="mb-6" aria-live="polite">
+  <% if flash.any? %>
+    <% flash.each do |type, message| %>
+      <div role="alert" class="p-4 rounded-lg <%= type == 'notice' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+        <%= message %>
+      </div>
+    <% end %>
+  <% end %>
+</section>
+
+<nav class="mb-6 flex justify-between items-center" aria-label="Task filters">
+  <div class="flex space-x-4 overflow-x-auto snap-x snap-mandatory">
+    <%= link_to "All", tasks_path(filter: "all"),
+        class: "px-4 py-1 rounded-lg #{@filter == 'all' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 dark:text-white'}",
+        aria: { current: @filter == 'all' ? 'page' : 'false' } %>
+    <%= link_to "Pending", tasks_path(filter: "pending"),
+        class: "px-4 py-1 rounded-lg #{@filter == 'pending' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 dark:text-white'}",
+        aria: { current: @filter == 'pending' ? 'page' : 'false' } %>
+    <%= link_to "Completed", tasks_path(filter: "completed"),
+        class: "px-4 py-1 rounded-lg #{@filter == 'completed' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 dark:text-white'}",
+        aria: { current: @filter == 'completed' ? 'page' : 'false' } %>
   </div>
   
+  <%= link_to "New Task", new_task_path,
+      class: "px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition max-lg:hidden",
+      data: { turbo_frame: "modal" },
+      aria: { label: "Create new task" } %>
+</nav>
+
+<section id="tasks" aria-labelledby="tasks-heading">
+  <h2 id="tasks-heading" class="sr-only">Task List</h2>
   <%= turbo_frame_tag "tasks" do %>
-    <div id="tasks-list" class="space-y-4">
+    <ul id="tasks-list" class="flex flex-col gap-4 list-none p-0">
       <% if @tasks.any? %>
         <%= render @tasks %>
       <% else %>
-        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-center dark:text-white">
+        <li class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-center dark:text-white">
           No tasks found. Create a new task to get started!
-        </div>
+        </li>
       <% end %>
-    </div>
+    </ul>
   <% end %>
-  
-  <%= turbo_frame_tag "modal" %>
-</div>
+</section>
+
+<%= turbo_frame_tag "modal" %>

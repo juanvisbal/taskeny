@@ -1,0 +1,16 @@
+<% if @task.errors.empty? %>
+  <%# Replace the updated task in the list %>
+  <%= turbo_stream.replace @task do %>
+    <%= render @task %>
+  <% end %>
+  
+  <%# Close the modal %>
+  <%= turbo_stream.replace "modal" do %>
+    <%= turbo_frame_tag "modal" %>
+  <% end %>
+  
+  <%# Update the flash message %>
+  <%= turbo_stream.replace "flash" do %>
+    <%= render "shared/flash" %>
+  <% end %>
+<% end %>

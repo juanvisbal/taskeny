@@ -1,23 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" data-controller="a11y">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Taskeny</title>
+  <title><%= content_for?(:title) ? yield(:title) : "Taskeny" %></title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <%= javascript_importmap_tags %>
+  <%# Includes all stylesheet files in app/assets/stylesheets %>
+   <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
-  <header class="bg-white dark:bg-gray-800 shadow-sm">
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen flex flex-col">
+  <!-- Skip to main content link -->
+  <a href="#main-content" 
+     class="skip-link sr-only focus:not-sr-only focus:absolute focus:p-4 focus:bg-blue-600 focus:text-white focus:z-50" 
+     data-a11y-target="skipLink"
+     data-action="click->a11y#skipToContent">
+    Skip to main content
+  </a>
+  
+  <!-- Screen reader announcements -->
+  <div aria-live="polite" 
+       class="sr-only" 
+       data-a11y-target="announcer">
+  </div>
+
+  <header class="bg-white dark:bg-gray-800 shadow-sm" role="banner">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
       <div class="flex items-center">
-        <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">TaskMaster</h1>
+        <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">Taskeny</h1>
       </div>
-      <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700" data-controller="theme">
+
+      <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700" data-controller="theme" data-action="click->theme#toggle">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 dark:hidden" viewBox="0 0 20 20" fill="currentColor">
           <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
         </svg>
@@ -41,8 +56,14 @@
     <% end %>
   </div>
 
-  <main class="container mx-auto px-4 pb-10">
+  <main id="main-content" role="main" class="container mx-auto px-4 pb-10 flex-grow">
     <%= yield %>
   </main>
+
+  <footer role="contentinfo" class="bg-white dark:bg-gray-800 py-6 mt-10">
+    <div class="container mx-auto px-4">
+      <p class="text-center text-gray-600 dark:text-gray-400">&copy; <%= Date.current.year %> Taskeny. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>

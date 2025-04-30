@@ -1,0 +1,16 @@
+<% if @task.persisted? %>
+  <%# Add the new task to the tasks list %>
+  <%= turbo_stream.prepend "tasks-list" do %>
+    <%= render @task %>
+  <% end %>
+  
+  <%# Close the modal %>
+  <%= turbo_stream.replace "modal" do %>
+    <%= turbo_frame_tag "modal" %>
+  <% end %>
+  
+  <%# Update the flash message %>
+  <%= turbo_stream.replace "flash" do %>
+    <%= render "shared/flash" %>
+  <% end %>
+<% end %>
