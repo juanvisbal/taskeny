@@ -47,7 +47,7 @@ Rails.application.routes.draw do
       resources :projects, only: [:index, :show]
     end
   end
-  
+
   # Authentication routes (uncomment when adding authentication)
   # devise_for :users
   # Or for a custom authentication system:
