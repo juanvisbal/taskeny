@@ -12,16 +12,6 @@
   <% end %>
 </header>
 
-<section id="flash" class="mb-6" aria-live="polite">
-  <% if flash.any? %>
-    <% flash.each do |type, message| %>
-      <div role="alert" class="p-4 rounded-lg <%= type == 'notice' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
-        <%= message %>
-      </div>
-    <% end %>
-  <% end %>
-</section>
-
 <nav class="mb-6 flex justify-between items-center" aria-label="Task filters">
   <div class="flex space-x-4 overflow-x-auto snap-x snap-mandatory">
     <%= link_to "All", tasks_path(filter: "all"),
