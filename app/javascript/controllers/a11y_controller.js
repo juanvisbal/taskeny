@@ -1,6 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
 
-// This controller handles accessibility features
 export default class extends Controller {
   static targets = [
     "skipLink", 

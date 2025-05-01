@@ -24,9 +24,6 @@ gem "turbo-rails"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 
-# Hotwire Native for iOS/Android support
-gem "hotwire-rails", "~> 0.1.3" # Bundle of Turbo and Stimulus
-
 # Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
 gem "tailwindcss-rails"
 
@@ -47,8 +44,6 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
-
-#
 
 gem 'concurrent-ruby', '1.3.4'
 gem 'mutex_m'

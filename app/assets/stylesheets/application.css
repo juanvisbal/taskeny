@@ -16,3 +16,25 @@
 turbo-frame {
   display: contents;
 }
+
+.flash-message {
+  animation: flashMessage 6s forwards;
+}
+@keyframes flashMessage {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  8% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}

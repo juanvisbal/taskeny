@@ -14,7 +14,7 @@ export default class extends Controller {
     }
   }
   
-  dismiss() {
+  remove() {
     this.element.classList.add('opacity-0')
     setTimeout(() => {
       this.element.remove()
