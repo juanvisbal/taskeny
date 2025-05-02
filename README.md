@@ -62,9 +62,9 @@ Visit `http://localhost:3000` in your browser to access the application.
 
 ### Todos
 
-[] System dark mode
-[] User accounts
-[] iOS/Android apps
+- [ ] System dark mode
+- [ ] User accounts
+- [ ] iOS/Android apps
 
 
 ## License
